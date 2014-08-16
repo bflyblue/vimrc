@@ -1,0 +1,171 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'	" required
+
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'godlygeek/tabular'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'nvie/vim-flake8'
+Plugin 'raichoo/haskell-vim'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'Shougo/neocomplcache'
+Plugin 'Shougo/vimproc'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-liquid'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-pathogen'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'Twinside/vim-haskellConceal'
+Plugin 'ujihisa/neco-ghc'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-scripts/proton'
+Plugin 'vim-scripts/pyte'
+Plugin 'vim-scripts/taglist.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" Basic Settings
+"set autoread
+set background=dark
+set backspace=indent,eol,start
+set cursorline
+set encoding=utf-8
+set history=50		" keep 50 lines of command line history
+set hlsearch
+set incsearch		" do incremental searching
+set laststatus=2
+set listchars=trail:␣,tab:›\ ,extends:>,precedes:<,nbsp:·
+"set listchars=tab:»·,trail:·,precedes:<,extends:>,eol:¶
+set modeline
+set modelines=5
+set mouse=a
+set nobackup		" do not keep a backup file, use versions instead
+set nowrap
+set number
+set ruler		" show the cursor position all the time
+set scrolloff=3
+set showcmd		" display incomplete commands
+set showmatch
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set wildmenu
+set wildignore+=.hg,.git,.svn
+set wildignore+=.sw?
+set wildignore+=.DS_Store
+set wildignore+=.pyc
+
+let c_space_errors=1
+let python_highlight_all=1
+
+syntax on
+filetype plugin indent on
+
+" CTRL-L redraws & clears search highlight
+if maparg('<C-L>', 'n') ==# ''
+	nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+endif
+
+" Colorscheme
+
+"let g:solarized_termtrans=1
+"let g:solarized_diffmode="high"
+"colorscheme solarized
+
+"let g:molokai_original=1
+"let g:rehash256=1
+colorscheme molokai
+
+" Airline
+"let g:airline#extensions#tabline#enabled = 1
+
+if has("gui_running")
+  let g:airline_theme="bubblegum"
+else
+  let g:airline_theme="badwolf"
+endif
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = ' '
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+if has("gui_running")
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.branch = '⑂'
+else
+  let g:airline_symbols.linenr = 'LN'
+  let g:airline_symbols.branch = 'BR'
+endif
+
+" Syntax
+let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol="E▶"
+let g:syntastic_style_error_symbol="E▷"
+let g:syntastic_warning_symbol="w▶"
+let g:syntastic_style_warning_symbol="w▷"
+" these work better with molokai
+highlight! link SyntasticWarningSign Comment
+highlight! link SyntasticErrorSign Statement
+highlight! link SignColumn String
+
+" Ctrl-P
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_cmd='CtrlPMixed'
+let g:ctrlp_open_new_file='r'
+
+" Completion
+let g:neocomplcache_enable_at_startup=1
+if !exists('g:neocomplcache_force_omni_patterns')
+	let g:neocomplcache_force_omni_patterns = {}
+endif
+" autocmd FileType python setlocal omnifunc=jedi#complete
+let g:jedi#popup_on_dot = 0
+let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+let g:necoghc_enable_detailed_browse=1
+
+" Tabs
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+
+" Tags
+let g:tagbar_iconchars = ['▶', '▼']
+
+" netrw
+let g:netrw_list_cmd="ssh -q USEPORT HOSTNAME ls -Fa"
+
+" haskell conceal
+let g:no_haskell_conceal = 1
+
+" ghcmod and hdevtools
+let g:ghcmod_ghc_options = ['-Wall']
+"let g:hdevtools_options = '-g-Wall'
+let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
+
+" liquid
+" let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
+let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'python', 'c']
+
+" NERDTree
+let NERDTreeIgnore=['\.o$', '\.hi$', '\.pyc$', '\~$']
