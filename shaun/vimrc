@@ -1,3 +1,4 @@
+let $GIT_SSL_NO_VERIFY = 'true'
 set nocompatible
 filetype off
 
@@ -81,6 +82,17 @@ if maparg('<C-L>', 'n') ==# ''
 	nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 endif
 
+let mapleader="\<Space>"
+nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>w :w<CR>
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+nmap <Leader><Leader> V
+
 " Colorscheme
 
 "let g:solarized_termtrans=1
@@ -104,9 +116,9 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = ' '
+let g:airline_left_sep = ''
 let g:airline_left_alt_sep = '|'
-let g:airline_right_sep = ' '
+let g:airline_right_sep = ''
 let g:airline_right_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 if has("gui_running")
@@ -134,6 +146,7 @@ let g:ctrlp_cmd='CtrlPMixed'
 let g:ctrlp_open_new_file='r'
 
 " Completion
+let g:neocomplcache_enable_insert_char_pre = 1
 let g:neocomplcache_enable_at_startup=1
 if !exists('g:neocomplcache_force_omni_patterns')
 	let g:neocomplcache_force_omni_patterns = {}
