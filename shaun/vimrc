@@ -8,10 +8,11 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'	" required
 
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'bflyblue/ghcmod-vim'
 Plugin 'bling/vim-airline'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'eagletmt/ghcmod-vim'
 Plugin 'godlygeek/tabular'
+Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
