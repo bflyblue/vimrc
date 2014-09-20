@@ -1,0 +1,8 @@
+"set guifont=Source\ Code\ Pro\ Regular\ 16
+set guifont=Source\ Code\ Pro\ Regular\ 12
+set go=aegit
+colorscheme pyte
+set nocursorline
+
+" set columns=125 lines=56
+" winpos 1295 32
