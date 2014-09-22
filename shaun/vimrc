@@ -101,6 +101,7 @@ nmap <Leader>P "+P
 nmap <Leader><Leader> 
 " nmap <Leader><Leader> :bn<CR>
 " nmap <Leader><BS> :bp<CR>
+map <F2> :NERDTreeToggle<CR>
 
 " Colorscheme
 
