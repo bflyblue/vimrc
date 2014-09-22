@@ -1,8 +1,11 @@
-"set guifont=Source\ Code\ Pro\ Regular\ 16
-set guifont=Source\ Code\ Pro\ Regular\ 12
-set go=aegit
+if has("gui_gtk2")
+  set gfn=Source\ Code\ Pro\ Regular\ 12
+  set go=aegit
+else
+  set gfn=Source_Code_Pro:h13
+  set anti
+  set fuoptions=maxvert,maxhorz
+  set go=aegmt
+endif
 colorscheme pyte
 set nocursorline
-
-" set columns=125 lines=56
-" winpos 1295 32

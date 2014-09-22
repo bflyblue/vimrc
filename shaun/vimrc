@@ -67,10 +67,12 @@ set showcmd		" display incomplete commands
 set showmatch
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set wildmenu
-set wildignore+=.hg,.git,.svn
+set wildignore+=*/.hg,*/.git,*/.svn
 set wildignore+=.sw?
 set wildignore+=.DS_Store
 set wildignore+=.pyc
+set wildignore+=.o
+set wildignore+=*/dist
 
 let c_space_errors=1
 let python_highlight_all=1
@@ -84,15 +86,21 @@ if maparg('<C-L>', 'n') ==# ''
 endif
 
 let mapleader="\<Space>"
-nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>f :CtrlP<CR>
+nnoremap <Leader>q :CtrlPQuickfix<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader><CR> :CtrlPTag<CR>
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>g :GhcModCheck<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 nmap <Leader>p "+p
 nmap <Leader>P "+P
-nmap <Leader><Leader> V
+nmap <Leader><Leader> 
+" nmap <Leader><Leader> :bn<CR>
+" nmap <Leader><BS> :bp<CR>
 
 " Colorscheme
 
@@ -142,9 +150,13 @@ highlight! link SyntasticErrorSign Statement
 highlight! link SignColumn String
 
 " Ctrl-P
-let g:ctrlp_working_path_mode=0
+let g:ctrlp_working_path_mode='r'
 let g:ctrlp_cmd='CtrlPMixed'
 let g:ctrlp_open_new_file='r'
+let g:ghcmod_open_quickfix_function = 'GhcModQuickFixByCtrlP'
+function! GhcModQuickFixByCtrlP()
+  CtrlPQuickfix
+endfunction
 
 " Completion
 let g:neocomplcache_enable_insert_char_pre = 1
