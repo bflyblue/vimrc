@@ -93,6 +93,7 @@ vmap <Leader>P "+P
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 nmap <Leader><Leader> V
+map <F2> :NERDTreeToggle<CR>
 
 " Colorscheme
 
