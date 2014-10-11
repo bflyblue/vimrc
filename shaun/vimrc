@@ -16,6 +16,8 @@ Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'raichoo/haskell-vim'
 Plugin 'rking/ag.vim'
@@ -39,6 +41,7 @@ Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-scripts/proton'
 Plugin 'vim-scripts/pyte'
 Plugin 'vim-scripts/taglist.vim'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -154,13 +157,13 @@ highlight! link SignColumn String
 let g:ctrlp_working_path_mode='r'
 let g:ctrlp_cmd='CtrlPMixed'
 let g:ctrlp_open_new_file='r'
-let g:ghcmod_open_quickfix_function = 'GhcModQuickFixByCtrlP'
-function! GhcModQuickFixByCtrlP()
-  CtrlPQuickfix
-endfunction
+" let g:ghcmod_open_quickfix_function = 'GhcModQuickFixByCtrlP'
+" function! GhcModQuickFixByCtrlP()
+"   CtrlPQuickfix
+" endfunction
 
 " Completion
-let g:neocomplcache_enable_insert_char_pre = 1
+" let g:neocomplcache_enable_insert_char_pre = 1
 let g:neocomplcache_enable_at_startup=1
 if !exists('g:neocomplcache_force_omni_patterns')
 	let g:neocomplcache_force_omni_patterns = {}
