@@ -11,9 +11,10 @@ Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/vimproc'
 Plugin 'Twinside/vim-haskellConceal'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'bitc/vim-hdevtools'
 Plugin 'bling/vim-airline'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'eagletmt/ghcmod-vim'
+"Plugin 'eagletmt/ghcmod-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
@@ -21,9 +22,11 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
+Plugin 'nelstrom/vim-subrip'
 Plugin 'nvie/vim-flake8'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'raichoo/haskell-vim'
+Plugin 'raichoo/purescript-vim'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
@@ -96,7 +99,9 @@ nnoremap <Leader>q :CtrlPQuickfix<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader><CR> :CtrlPTag<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>g :GhcModCheck<CR>
+nnoremap <Leader>e :Errors<CR>
+nnoremap <Leader>s :SyntasticCheck<CR>
+" nnoremap <Leader>g :GhcModCheck<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 vmap <Leader>p "+p
@@ -145,17 +150,6 @@ else
   let g:airline_symbols.branch = 'BR'
 endif
 
-" Syntax
-let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol="E▶"
-let g:syntastic_style_error_symbol="E▷"
-let g:syntastic_warning_symbol="w▶"
-let g:syntastic_style_warning_symbol="w▷"
-" these work better with molokai
-highlight! link SyntasticWarningSign Comment
-highlight! link SyntasticErrorSign Statement
-highlight! link SignColumn String
-
 " Ctrl-P
 let g:ctrlp_working_path_mode='r'
 let g:ctrlp_cmd='CtrlPMixed'
@@ -191,10 +185,24 @@ let g:netrw_list_cmd="ssh -q USEPORT HOSTNAME ls -Fa"
 " haskell conceal
 let g:no_haskell_conceal = 1
 
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol="E▶"
+let g:syntastic_style_error_symbol="E▷"
+let g:syntastic_warning_symbol="w▶"
+let g:syntastic_style_warning_symbol="w▷"
+highlight! link SyntasticWarningSign Comment
+highlight! link SyntasticErrorSign Statement
+highlight! link SignColumn String
+
 " ghcmod and hdevtools
-let g:ghcmod_ghc_options = ['-Wall']
-"let g:hdevtools_options = '-g-Wall'
-let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
+let g:syntastic_haskell_checkers = ['hdevtools', 'hlint'] 	" 'ghc_mod' currently broken on 7.10
+let g:syntastic_haskell_hdevtools_args = '-g-Wall'
+"let g:ghcmod_ghc_options = ['-Wall']
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
