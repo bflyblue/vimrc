@@ -19,6 +19,10 @@ nnoremap <buffer> <silent> <Leader>c :HdevtoolsClear<CR>
 " nnoremap <buffer> <Leader>i :GhcModInfo<CR>
 " nnoremap <buffer> <Leader>I :GhcModInfoPreview<CR>
 " nnoremap <buffer> <silent> <Leader>c :GhcModTypeClear<CR>
+"
+if executable('stylish-haskell')
+    setlocal formatprg='stylish-haskell'
+endif
 
 " This is a Haskell configuration for the Vim Tagbar plugin that uses
 " lushtags.
