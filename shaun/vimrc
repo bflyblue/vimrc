@@ -133,22 +133,24 @@ else
   let g:airline_theme="badwolf"
 endif
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+let g:airline_powerline_fonts=1
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = '|'
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = '|'
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+" 
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = '|'
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
-if has("gui_running")
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.branch = '⑂'
-else
-  let g:airline_symbols.linenr = 'LN'
-  let g:airline_symbols.branch = 'BR'
-endif
+" if has("gui_running")
+"   let g:airline_symbols.linenr = '¶'
+"   let g:airline_symbols.branch = '⑂'
+" else
+"   let g:airline_symbols.linenr = 'LN'
+"   let g:airline_symbols.branch = 'BR'
+" endif
 
 " Ctrl-P
 let g:ctrlp_working_path_mode='r'
