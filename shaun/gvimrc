@@ -1,5 +1,10 @@
 if has("gui_gtk2")
   set gfn=Source\ Code\ Pro\ Regular\ 12
+  nmap <Leader>1 :set gfn=Source\ Code\ Pro\ Regular\ 12<CR>
+  nmap <Leader>2 :set gfn=Source\ Code\ Pro\ Regular\ 14<CR>
+  nmap <Leader>3 :set gfn=Source\ Code\ Pro\ Regular\ 16<CR>
+  nmap <Leader>4 :set gfn=Source\ Code\ Pro\ Regular\ 17<CR>
+  nmap <Leader>5 :set gfn=Source\ Code\ Pro\ Regular\ 19<CR>
   set go=aegit
 else
   set gfn=Source_Code_Pro:h13

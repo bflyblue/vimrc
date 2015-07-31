@@ -14,7 +14,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'bitc/vim-hdevtools'
 Plugin 'bling/vim-airline'
 Plugin 'davidhalter/jedi-vim'
-"Plugin 'eagletmt/ghcmod-vim'
+"Plugin 'eagletmt/ghcmod-vim' 	" not working ghc 7.10
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
@@ -25,9 +25,11 @@ Plugin 'mattn/webapi-vim'
 Plugin 'nelstrom/vim-subrip'
 Plugin 'nvie/vim-flake8'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
-Plugin 'raichoo/haskell-vim'
+"Plugin 'phildawes/racer'
+Plugin 'neovimhaskell/haskell-vim'
 Plugin 'raichoo/purescript-vim'
 Plugin 'rking/ag.vim'
+Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tikhomirov/vim-glsl'
@@ -56,6 +58,7 @@ set background=dark
 set backspace=indent,eol,start
 set cursorline
 set encoding=utf-8
+set hidden
 set history=50		" keep 50 lines of command line history
 set hlsearch
 set incsearch		" do incremental searching
@@ -213,3 +216,7 @@ let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'python', 'c']
 " NERDTree
 let NERDTreeIgnore=['\~$']
 let NERDTreeRespectWildIgnore=1
+
+" racer
+"let g:racer_cmd = "<path-to-racer>/target/release/racer"
+"let $RUST_SRC_PATH="<path-to-rust-srcdir>/src/"
