@@ -8,9 +8,15 @@ if has("gui_gtk2")
   set go=aegit
 else
   set gfn=Source_Code_Pro:h13
+  nmap <Leader>1 :set gfn=Source_Code_Pro:h13<CR>
+  nmap <Leader>2 :set gfn=Source_Code_Pro:h15<CR>
+  nmap <Leader>3 :set gfn=Source_Code_Pro:h17<CR>
+  nmap <Leader>4 :set gfn=Source_Code_Pro:h18<CR>
+  nmap <Leader>5 :set gfn=Source_Code_Pro:h20<CR>
   set anti
   set fuoptions=maxvert,maxhorz
   set go=aegmt
 endif
 colorscheme pyte
+"colorscheme PaperColor
 set nocursorline

@@ -7,6 +7,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'	" required
 
+Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/vimproc'
 Plugin 'Twinside/vim-haskellConceal'
@@ -19,9 +20,11 @@ Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
+Plugin 'ludovicchabant/vim-lawrencium'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
+Plugin 'morhetz/gruvbox'
 Plugin 'nelstrom/vim-subrip'
 Plugin 'nvie/vim-flake8'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
@@ -46,11 +49,10 @@ Plugin 'ujihisa/neco-ghc'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-scripts/proton'
 Plugin 'vim-scripts/pyte'
+Plugin 'vim-scripts/saturn.vim'
 Plugin 'vim-scripts/taglist.vim'
 
-
 call vundle#end()
-filetype plugin indent on
 
 " Basic Settings
 "set autoread
@@ -118,42 +120,19 @@ nnoremap <Leader><Leader> 
 map <F2> :NERDTreeToggle<CR>
 
 " Colorscheme
-
-"let g:solarized_termtrans=1
-"let g:solarized_diffmode="high"
-"colorscheme solarized
-
-"let g:molokai_original=1
-"let g:rehash256=1
 colorscheme molokai
 
 " Airline
-"let g:airline#extensions#tabline#enabled = 1
-
 if has("gui_running")
   let g:airline_theme="bubblegum"
 else
   let g:airline_theme="badwolf"
 endif
-
 let g:airline_powerline_fonts=1
-
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-" 
-" let g:airline_left_sep = ''
-" let g:airline_left_alt_sep = '|'
-" let g:airline_right_sep = ''
-" let g:airline_right_alt_sep = '|'
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
-" if has("gui_running")
-"   let g:airline_symbols.linenr = '¶'
-"   let g:airline_symbols.branch = '⑂'
-" else
-"   let g:airline_symbols.linenr = 'LN'
-"   let g:airline_symbols.branch = 'BR'
-" endif
 
 " Ctrl-P
 let g:ctrlp_working_path_mode='r'
@@ -206,8 +185,9 @@ highlight! link SignColumn String
 
 " ghcmod and hdevtools
 let g:syntastic_haskell_checkers = ['hdevtools', 'hlint'] 	" 'ghc_mod' currently broken on 7.10
+"let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint'] 	" 'ghc_mod' currently broken on 7.10
 let g:syntastic_haskell_hdevtools_args = '-g-Wall'
-"let g:ghcmod_ghc_options = ['-Wall']
+let g:ghcmod_ghc_options = ['-Wall']
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
