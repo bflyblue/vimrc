@@ -11,10 +11,10 @@ Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/vimproc'
 Plugin 'Twinside/vim-haskellConceal'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'bitc/vim-hdevtools'
+"Plugin 'bitc/vim-hdevtools'
 Plugin 'bling/vim-airline'
 Plugin 'davidhalter/jedi-vim'
-"Plugin 'eagletmt/ghcmod-vim' 	" not working ghc 7.10
+Plugin 'eagletmt/ghcmod-vim' 	" not working ghc 7.10
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'kchmck/vim-coffee-script'
@@ -48,9 +48,7 @@ Plugin 'vim-scripts/proton'
 Plugin 'vim-scripts/pyte'
 Plugin 'vim-scripts/taglist.vim'
 
-
 call vundle#end()
-filetype plugin indent on
 
 " Basic Settings
 "set autoread
@@ -93,7 +91,7 @@ filetype plugin indent on
 
 " CTRL-L redraws & clears search highlight
 if maparg('<C-L>', 'n') ==# ''
-	nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 endif
 
 let mapleader="\<Space>"
@@ -104,7 +102,6 @@ nnoremap <Leader><CR> :CtrlPTag<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>e :Errors<CR>
 nnoremap <Leader>s :SyntasticCheck<CR>
-" nnoremap <Leader>g :GhcModCheck<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 vmap <Leader>p "+p
@@ -118,13 +115,6 @@ nnoremap <Leader><Leader> 
 map <F2> :NERDTreeToggle<CR>
 
 " Colorscheme
-
-"let g:solarized_termtrans=1
-"let g:solarized_diffmode="high"
-"colorscheme solarized
-
-"let g:molokai_original=1
-"let g:rehash256=1
 colorscheme molokai
 
 " Airline
@@ -141,7 +131,7 @@ let g:airline_powerline_fonts=1
 " if !exists('g:airline_symbols')
 "   let g:airline_symbols = {}
 " endif
-" 
+"
 " let g:airline_left_sep = ''
 " let g:airline_left_alt_sep = '|'
 " let g:airline_right_sep = ''
@@ -206,8 +196,9 @@ highlight! link SignColumn String
 
 " ghcmod and hdevtools
 let g:syntastic_haskell_checkers = ['hdevtools', 'hlint'] 	" 'ghc_mod' currently broken on 7.10
+"let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
 let g:syntastic_haskell_hdevtools_args = '-g-Wall'
-"let g:ghcmod_ghc_options = ['-Wall']
+let g:ghcmod_ghc_options = ['-Wall']
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
