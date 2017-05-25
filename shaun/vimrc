@@ -13,7 +13,9 @@ Plugin 'Shougo/vimproc'
 Plugin 'Twinside/vim-haskellConceal'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bitc/vim-hdevtools'
-Plugin 'eagletmt/ghcmod-vim'
+Plugin 'bling/vim-airline'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'eagletmt/ghcmod-vim' 	" not working ghc 7.10
 Plugin 'exu/pgsql.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
@@ -111,7 +113,7 @@ nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader><CR> :CtrlPTag<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>e :Errors<CR>
-nnoremap <Leader>s :SyntasticCheck<CR>
+nnoremap <Leader>r :SyntasticCheck<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 vmap <Leader>p "+p
@@ -184,9 +186,13 @@ highlight! link SyntasticErrorSign Statement
 highlight! link SignColumn String
 
 " ghcmod and hdevtools
+<<<<<<< HEAD
+=======
+"let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
+"let g:ghcmod_ghc_options = ['-Wall']
+>>>>>>> 1c8a1c9bb88526c9bf2bfd9848341b6dd6bfe2bc
 let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
 let g:syntastic_haskell_hdevtools_args = '-g-Wall'
-let g:ghcmod_ghc_options = ['-Wall']
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
