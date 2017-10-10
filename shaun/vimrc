@@ -10,12 +10,10 @@ Plugin 'gmarik/Vundle.vim'	" required
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/vimproc'
-Plugin 'Twinside/vim-haskellConceal'
+" Plugin 'Twinside/vim-haskellConceal'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'bitc/vim-hdevtools'
-Plugin 'bling/vim-airline'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'eagletmt/ghcmod-vim' 	" not working ghc 7.10
+" Plugin 'davidhalter/jedi-vim'
+Plugin 'eagletmt/ghcmod-vim'
 Plugin 'exu/pgsql.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'junegunn/seoul256.vim'
@@ -27,15 +25,13 @@ Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'nelstrom/vim-subrip'
-Plugin 'nvie/vim-flake8'
-Plugin 'pbrisbin/vim-syntax-shakespeare'
-"Plugin 'phildawes/racer'
 Plugin 'neovimhaskell/haskell-vim'
+" Plugin 'nvie/vim-flake8'
+Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'raichoo/purescript-vim'
 Plugin 'rking/ag.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'tikhomirov/vim-glsl'
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-characterize'
@@ -47,14 +43,18 @@ Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
-"Plugin 'ujihisa/neco-ghc'
-Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-scripts/proton'
 Plugin 'vim-scripts/pyte'
 Plugin 'vim-scripts/saturn.vim'
 Plugin 'vim-scripts/taglist.vim'
+Plugin 'w0rp/ale'
+"Plugin 'bitc/vim-hdevtools'
+"Plugin 'phildawes/racer'
+"Plugin 'scrooloose/syntastic'
+"Plugin 'ujihisa/neco-ghc'
 
 if has('nvim')
   Plugin 'floobits/floobits-neovim'
@@ -138,7 +138,6 @@ else
 endif
 let g:airline_powerline_fonts=1
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
@@ -168,31 +167,41 @@ let g:tagbar_iconchars = ['▶', '▼']
 " netrw
 let g:netrw_list_cmd="ssh -q USEPORT HOSTNAME ls -Fa"
 
-" haskell conceal
+" haskell
 let g:no_haskell_conceal = 1
+let g:haskell_indent_disable = 1
+
+" ALE
+let g:airline#extensions#ale#enabled = 1
+let g:ale_change_sign_column_color = 1
+let g:ale_completion_enabled = 1
+let g:ale_echo_msg_format = "%linter%: %s"
+"let g:ale_linters = {'haskell': ['stack-ghc-mod', 'stack-build', 'stack-ghc']}
+let g:ale_linters = {'haskell': ['stack-ghc-mod']}
+let g:ale_sign_error = "E▶"
+let g:ale_sign_style_error = "E▷"
+let g:ale_sign_warning = "w▶"
+let g:ale_sign_style_warning = "w▷"
+let g:ale_sign_info = "i▶"
 
 " Syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol="E▶"
-let g:syntastic_style_error_symbol="E▷"
-let g:syntastic_warning_symbol="w▶"
-let g:syntastic_style_warning_symbol="w▷"
-highlight! link SyntasticWarningSign Comment
-highlight! link SyntasticErrorSign Statement
-highlight! link SignColumn String
+" let g:airline#extensions#syntastic#enabled = 1
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 2
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_enable_signs=1
+" let g:syntastic_error_symbol="E▶"
+" let g:syntastic_style_error_symbol="E▷"
+" let g:syntastic_warning_symbol="w▶"
+" let g:syntastic_style_warning_symbol="w▷"
+" highlight! link SyntasticWarningSign Comment
+" highlight! link SyntasticErrorSign Statement
+" highlight! link SignColumn String
 
 " ghcmod and hdevtools
-<<<<<<< HEAD
-=======
-"let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-"let g:ghcmod_ghc_options = ['-Wall']
->>>>>>> 1c8a1c9bb88526c9bf2bfd9848341b6dd6bfe2bc
-let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
-let g:syntastic_haskell_hdevtools_args = '-g-Wall'
+" let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
+" let g:syntastic_haskell_hdevtools_args = '-g-Wall'
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
