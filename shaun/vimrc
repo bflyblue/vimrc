@@ -7,12 +7,19 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'	" required
 
+" Plugin 'Twinside/vim-haskellConceal'
+" Plugin 'davidhalter/jedi-vim'
+" Plugin 'nvie/vim-flake8'
+" Plugin 'bitc/vim-hdevtools'
+" Plugin 'phildawes/racer'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'ujihisa/neco-ghc'
+
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'Shougo/neocomplcache'
 Plugin 'Shougo/vimproc'
-" Plugin 'Twinside/vim-haskellConceal'
 Plugin 'altercation/vim-colors-solarized'
-" Plugin 'davidhalter/jedi-vim'
+Plugin 'alx741/vim-hindent'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'exu/pgsql.vim'
 Plugin 'godlygeek/tabular'
@@ -26,7 +33,6 @@ Plugin 'mattn/webapi-vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'nelstrom/vim-subrip'
 Plugin 'neovimhaskell/haskell-vim'
-" Plugin 'nvie/vim-flake8'
 Plugin 'pbrisbin/vim-syntax-shakespeare'
 Plugin 'raichoo/purescript-vim'
 Plugin 'rking/ag.vim'
@@ -51,14 +57,6 @@ Plugin 'vim-scripts/pyte'
 Plugin 'vim-scripts/saturn.vim'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'w0rp/ale'
-"Plugin 'bitc/vim-hdevtools'
-"Plugin 'phildawes/racer'
-"Plugin 'scrooloose/syntastic'
-"Plugin 'ujihisa/neco-ghc'
-
-if has('nvim')
-  Plugin 'floobits/floobits-neovim'
-endif
 
 call vundle#end()
 
@@ -101,6 +99,13 @@ let python_highlight_all=1
 syntax on
 filetype plugin indent on
 
+if &term == "xterm-256color"
+  set termguicolors
+endif
+
+" Colorscheme
+colorscheme molokai
+
 " CTRL-L redraws & clears search highlight
 if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
@@ -120,15 +125,17 @@ vmap <Leader>p "+p
 vmap <Leader>P "+P
 nmap <Leader>p "+p
 nmap <Leader>P "+P
+
+vmap <C-Insert> "+y
+nmap <S-Insert> "+p
+map! <S-Insert> <C-r>"
+
 nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <Leader><Leader> 
 " nmap <Leader><Leader> :bn<CR>
 " nmap <Leader><BS> :bp<CR>
 map <F2> :NERDTreeToggle<CR>
 noremap <silent> <F4> :Ag!<CR>
-
-" Colorscheme
-colorscheme molokai
 
 " Airline
 if has("gui_running")
@@ -168,16 +175,18 @@ let g:tagbar_iconchars = ['▶', '▼']
 let g:netrw_list_cmd="ssh -q USEPORT HOSTNAME ls -Fa"
 
 " haskell
+let g:hindent_on_save = 0
 let g:no_haskell_conceal = 1
 let g:haskell_indent_disable = 1
 
 " ALE
 let g:airline#extensions#ale#enabled = 1
-let g:ale_change_sign_column_color = 1
-let g:ale_completion_enabled = 1
+let g:ale_change_sign_column_color = 0
+let g:ale_completion_enabled = 0
 let g:ale_echo_msg_format = "%linter%: %s"
 "let g:ale_linters = {'haskell': ['stack-ghc-mod', 'stack-build', 'stack-ghc']}
-let g:ale_linters = {'haskell': ['stack-ghc-mod']}
+let g:ale_linters = {'haskell': ['stack-ghc-mod', 'hlint']}
+"let g:ale_linters = {'haskell': ['hdevtools', 'hlint']}
 let g:ale_sign_error = "E▶"
 let g:ale_sign_style_error = "E▷"
 let g:ale_sign_warning = "w▶"
