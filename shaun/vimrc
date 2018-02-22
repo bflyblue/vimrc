@@ -1,64 +1,70 @@
-let $GIT_SSL_NO_VERIFY = 'true'
+" let $GIT_SSL_NO_VERIFY = 'true'
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'gmarik/Vundle.vim'	" required
+if has('nvim')
+  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
 
-" Plugin 'Twinside/vim-haskellConceal'
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'nvie/vim-flake8'
-" Plugin 'bitc/vim-hdevtools'
-" Plugin 'phildawes/racer'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'ujihisa/neco-ghc'
+  " (Optional) Multi-entry selection UI.
+  Plug 'junegunn/fzf'
+  " (Completion plugin option 1)
+  " Plug 'roxma/nvim-completion-manager'
+  " (Completion plugin option 2)
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  " Plug 'natebosch/vim-lsc'
+  " Plug 'Shougo/neocomplcache'
+  " Plug 'Shougo/vimproc'
+  " Plug 'eagletmt/ghcmod-vim'
+  Plug 'w0rp/ale'
+endif
 
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'Shougo/neocomplcache'
-Plugin 'Shougo/vimproc'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'alx741/vim-hindent'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'exu/pgsql.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'junegunn/seoul256.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'kien/ctrlp.vim'
-Plugin 'ludovicchabant/vim-lawrencium'
-Plugin 'majutsushi/tagbar'
-Plugin 'mattn/gist-vim'
-Plugin 'mattn/webapi-vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'nelstrom/vim-subrip'
-Plugin 'neovimhaskell/haskell-vim'
-Plugin 'pbrisbin/vim-syntax-shakespeare'
-Plugin 'raichoo/purescript-vim'
-Plugin 'rking/ag.vim'
-Plugin 'rust-lang/rust.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tikhomirov/vim-glsl'
-Plugin 'tomasr/molokai'
-Plugin 'tpope/vim-characterize'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-liquid'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-pathogen'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-scripts/proton'
-Plugin 'vim-scripts/pyte'
-Plugin 'vim-scripts/saturn.vim'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'w0rp/ale'
+" Plug 'Floobits/floobits-vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'alx741/vim-hindent'
+Plug 'anekos/hledger-vim'
+Plug 'exu/pgsql.vim'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/seoul256.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'kien/ctrlp.vim'
+Plug 'ludovicchabant/vim-lawrencium'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+Plug 'morhetz/gruvbox'
+" Plug 'mpickering/hlint-refactor-vim'
+Plug 'nelstrom/vim-subrip'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'pbrisbin/vim-syntax-shakespeare'
+Plug 'raichoo/purescript-vim'
+Plug 'rking/ag.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tikhomirov/vim-glsl'
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-liquid'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-pathogen'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-scripts/proton'
+Plug 'vim-scripts/pyte'
+Plug 'vim-scripts/saturn.vim'
+Plug 'vim-scripts/taglist.vim'
 
-call vundle#end()
+call plug#end()
 
 " Basic Settings
 "set autoread
@@ -135,7 +141,11 @@ nnoremap <Leader><Leader> 
 " nmap <Leader><Leader> :bn<CR>
 " nmap <Leader><BS> :bp<CR>
 map <F2> :NERDTreeToggle<CR>
-noremap <silent> <F4> :Ag!<CR>
+noremap <silent> <F4> :LAg!<CR>
+
+" Ag
+let g:ag_working_path_mode='r'
+let g:ag_highlight=1
 
 " Airline
 if has("gui_running")
@@ -143,13 +153,17 @@ if has("gui_running")
 else
   let g:airline_theme="badwolf"
 endif
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.notexists = '∄'
 
 " Ctrl-P
-let g:ctrlp_working_path_mode='r'
+let g:ctrlp_working_path_mode='ra'
 let g:ctrlp_cmd='CtrlPMixed'
 let g:ctrlp_open_new_file='r'
 " let g:ghcmod_open_quickfix_function = 'GhcModQuickFixByCtrlP'
@@ -158,9 +172,11 @@ let g:ctrlp_open_new_file='r'
 " endfunction
 
 " Completion
-" let g:neocomplcache_enable_insert_char_pre = 1
-let g:neocomplcache_enable_at_startup=1
-let g:necoghc_enable_detailed_browse=1
+if !has('nvim')
+  " let g:neocomplcache_enable_insert_char_pre = 1
+  let g:neocomplcache_enable_at_startup=1
+  let g:necoghc_enable_detailed_browse=1
+endif
 
 " Tabs
 nmap <Leader>a= :Tabularize /=<CR>
@@ -179,19 +195,39 @@ let g:hindent_on_save = 0
 let g:no_haskell_conceal = 1
 let g:haskell_indent_disable = 1
 
+" LanguageClient
+if has('nvim')
+  " \ 'haskell': ['stack', 'exec', '--', 'hie', '--lsp', '-d', '-lhie.log']
+  let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['stack', 'exec', '--', 'hie', '--lsp']
+    \ }
+  let g:LanguageClient_autoStart = 1
+  " let g:LanguageClient_setLoggingLevel = 'INFO'
+  " set completefunc=LanguageClient#complete
+  let g:deoplete#enable_at_startup = 1
+endif
+
 " ALE
-let g:airline#extensions#ale#enabled = 1
-let g:ale_change_sign_column_color = 0
-let g:ale_completion_enabled = 0
-let g:ale_echo_msg_format = "%linter%: %s"
-"let g:ale_linters = {'haskell': ['stack-ghc-mod', 'stack-build', 'stack-ghc']}
-let g:ale_linters = {'haskell': ['stack-ghc-mod', 'hlint']}
-"let g:ale_linters = {'haskell': ['hdevtools', 'hlint']}
-let g:ale_sign_error = "E▶"
-let g:ale_sign_style_error = "E▷"
-let g:ale_sign_warning = "w▶"
-let g:ale_sign_style_warning = "w▷"
-let g:ale_sign_info = "i▶"
+if !has('nvim')
+  "let g:lsc_server_commands = {'haskell': 'hie --lsp'}
+  " let g:lsc_server_commands = {'haskell': '/home/shaun/devel/hie.sh'}
+  let g:lsc_trace_level = 'messages'
+  let g:airline#extensions#ale#enabled = 1
+  let g:ale_lint_on_text_changed = "never"
+  let g:ale_open_list = 1
+  let g:ale_change_sign_column_color = 0
+  let g:ale_completion_enabled = 0
+  let g:ale_echo_msg_format = "%linter%: %s"
+  "let g:ale_linters = {'haskell': ['stack-build', 'hlint']}
+  "let g:ale_linters = {'haskell': ['stack-ghc', 'hlint']}
+  let g:ale_linters = {'haskell': ['stack-ghc-mod', 'hlint']}
+  "let g:ale_linters = {'haskell': ['hdevtools', 'hlint']}
+  let g:ale_sign_error = "E▶"
+  let g:ale_sign_style_error = "E▷"
+  let g:ale_sign_warning = "w▶"
+  let g:ale_sign_style_warning = "w▷"
+  let g:ale_sign_info = "i▶"
+endif
 
 " Syntastic
 " let g:airline#extensions#syntastic#enabled = 1
