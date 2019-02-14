@@ -14,14 +14,15 @@ setlocal formatoptions=croqlj
 " nnoremap <buffer> <Leader>t :HdevtoolsType<CR>
 " nnoremap <buffer> <Leader>i :HdevtoolsInfo<CR>
 " nnoremap <buffer> <silent> <Leader>c :HdevtoolsClear<CR>
-nnoremap <buffer> <Leader>g :GhcModCheck<CR>
-nnoremap <buffer> <Leader>t :GhcModType<CR>
-nnoremap <buffer> <Leader>T :GhcModTypeInsert<CR>
-nnoremap <buffer> <Leader>i :GhcModInfo<CR>
-nnoremap <buffer> <Leader>I :GhcModInfoPreview<CR>
-nnoremap <buffer> <silent> <Leader>c :GhcModTypeClear<CR>
-nnoremap <buffer> <Leader>S :GhcModSigCodegen<CR>
-nnoremap <buffer> <Leader>s :GhcModSplitFunCase<CR>
+"
+" nnoremap <buffer> <Leader>g :GhcModCheck<CR>
+" nnoremap <buffer> <Leader>t :GhcModType<CR>
+" nnoremap <buffer> <Leader>T :GhcModTypeInsert<CR>
+" nnoremap <buffer> <Leader>i :GhcModInfo<CR>
+" nnoremap <buffer> <Leader>I :GhcModInfoPreview<CR>
+" nnoremap <buffer> <silent> <Leader>c :GhcModTypeClear<CR>
+" nnoremap <buffer> <Leader>S :GhcModSigCodegen<CR>
+" nnoremap <buffer> <Leader>s :GhcModSplitFunCase<CR>
 
 nmap <buffer> <Leader>d <Plug>(ale_detail)
 
@@ -29,7 +30,7 @@ nmap <buffer> <Leader>d <Plug>(ale_detail)
 nmap <silent> <C-Up> <Plug>(ale_previous)
 nmap <silent> <C-Down> <Plug>(ale_next)
 
-map <buffer> <silent> <F5> :silent :exec "!hasktags -c ."<CR>:redraw!<CR>:echo "hasktags complete"<CR>
+" map <buffer> <silent> <F5> :silent :exec "!hasktags -c ."<CR>:redraw!<CR>:echo "hasktags complete"<CR>
 
 if executable('stylish-haskell')
     setlocal formatprg='stylish-haskell'

@@ -1,4 +1,3 @@
-" let $GIT_SSL_NO_VERIFY = 'true'
 set nocompatible
 filetype off
 
@@ -10,9 +9,10 @@ if has('nvim')
   " (Optional) Multi-entry selection UI.
   Plug 'junegunn/fzf'
   " (Completion plugin option 1)
-  " Plug 'roxma/nvim-completion-manager'
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
   " (Completion plugin option 2)
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   " Plug 'natebosch/vim-lsc'
   " Plug 'Shougo/neocomplcache'
@@ -54,11 +54,12 @@ Plug 'tpope/vim-liquid'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-pathogen'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-scripts/proton'
 Plug 'vim-scripts/pyte'
 Plug 'vim-scripts/saturn.vim'
@@ -90,6 +91,7 @@ set scrolloff=3
 set showcmd		" display incomplete commands
 set showmatch
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set updatetime=20
 set wildmenu
 set wildignore+=*/.hg,*/.git,*/.svn
 set wildignore+=*.sw?
@@ -105,8 +107,16 @@ let python_highlight_all=1
 syntax on
 filetype plugin indent on
 
-if &term == "xterm-256color"
+if has('nvim')
   set termguicolors
+else
+  if &term ==? "xterm-256color"
+    set termguicolors
+  elseif &term ==? "st-256color"
+    set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
 endif
 
 " Colorscheme
@@ -118,13 +128,15 @@ if maparg('<C-L>', 'n') ==# ''
 endif
 
 let mapleader="\<Space>"
+let maplocalleader=","
+
 nnoremap <Leader>f :CtrlP<CR>
 nnoremap <Leader>q :CtrlPQuickfix<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader><CR> :CtrlPTag<CR>
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>e :Errors<CR>
-nnoremap <Leader>r :SyntasticCheck<CR>
+" nnoremap <Leader>e :Errors<CR>
+" nnoremap <Leader>r :SyntasticCheck<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 vmap <Leader>p "+p
@@ -153,23 +165,31 @@ if has("gui_running")
 else
   let g:airline_theme="badwolf"
 endif
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffer_nr_show = 1
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.branch = ''
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
 
 " Ctrl-P
 let g:ctrlp_working_path_mode='ra'
-let g:ctrlp_cmd='CtrlPMixed'
+let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_open_new_file='r'
-" let g:ghcmod_open_quickfix_function = 'GhcModQuickFixByCtrlP'
-" function! GhcModQuickFixByCtrlP()
-"   CtrlPQuickfix
-" endfunction
 
 " Completion
 if !has('nvim')
@@ -197,30 +217,91 @@ let g:haskell_indent_disable = 1
 
 " LanguageClient
 if has('nvim')
-  " \ 'haskell': ['stack', 'exec', '--', 'hie', '--lsp', '-d', '-lhie.log']
+    " \ 'haskell': ['stack', 'exec', '--', '/home/shaun/.nix-profile/bin/hie', '--lsp']
   let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['stack', 'exec', '--', 'hie', '--lsp']
+    \ 'haskell': ['hie-wrapper', '--lsp']
     \ }
   let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_autoStop = 1
+  " let g:LanguageClient_changeThrottle = 1
+  let g:LanguageClient_waitOutputTimeout = 120
   " let g:LanguageClient_setLoggingLevel = 'INFO'
   " set completefunc=LanguageClient#complete
-  let g:deoplete#enable_at_startup = 1
+  " let g:deoplete#enable_at_startup = 1
+  let g:LanguageClient_diagnosticsDisplay =
+  \ {
+  \     1: {
+  \         "name": "Error",
+  \         "texthl": "ALEError",
+  \         "signText": "✖",
+  \         "signTexthl": "ALEErrorSign",
+  \         "virtualTexthl": "ALEErrorSign",
+  \     },
+  \     2: {
+  \         "name": "Warning",
+  \         "texthl": "ALEWarning",
+  \         "signText": "⚠",
+  \         "signTexthl": "ALEWarningSign",
+  \         "virtualTexthl": "ALEWarningSign",
+  \     },
+  \     3: {
+  \         "name": "Information",
+  \         "texthl": "ALEInfo",
+  \         "signText": "ℹ",
+  \         "signTexthl": "ALEInfoSign",
+  \         "virtualTexthl": "ALEInfoSign",
+  \     },
+  \     4: {
+  \         "name": "Hint",
+  \         "texthl": "ALEInfo",
+  \         "signText": "➤",
+  \         "signTexthl": "ALEInfoSign",
+  \         "virtualTexthl": "ALEInfoSign",
+  \     },
+  \ }
+  highlight! link ALEErrorSign DiffDelete
+  highlight! link ALEWarningSign DiffAdd
+  highlight! link ALEInfoSign DiffChange
+
+  " enable ncm2 for all buffers
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+  set completeopt=noinsert,menuone,noselect
+
+  augroup LanguageClient_config
+    autocmd!
+    autocmd User LanguageClientStarted setlocal signcolumn=yes
+    autocmd User LanguageClientStopped setlocal signcolumn=auto
+  augroup END
+
+  function LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+      set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+      nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+      nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+      " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+      nnoremap <buffer> <silent> <Leader>s :call LanguageClient#textDocument_documentSymbol()<CR>
+      nnoremap <buffer> <silent> <Leader>Q :call LanguageClient#textDocument_formatting()<CR>
+      nnoremap <buffer> <silent> <Leader>A :call LanguageClient#textDocument_codeAction()<CR>
+    endif
+  endfunction
+  
+  autocmd FileType * call LC_maps()
 endif
 
 " ALE
 if !has('nvim')
-  "let g:lsc_server_commands = {'haskell': 'hie --lsp'}
-  " let g:lsc_server_commands = {'haskell': '/home/shaun/devel/hie.sh'}
+  let g:lsc_server_commands = {'haskell': 'hie --lsp'}
   let g:lsc_trace_level = 'messages'
   let g:airline#extensions#ale#enabled = 1
   let g:ale_lint_on_text_changed = "never"
-  let g:ale_open_list = 1
+  let g:ale_open_list = 0
   let g:ale_change_sign_column_color = 0
   let g:ale_completion_enabled = 0
   let g:ale_echo_msg_format = "%linter%: %s"
+  let g:ale_linters = {'haskell': []}
   "let g:ale_linters = {'haskell': ['stack-build', 'hlint']}
   "let g:ale_linters = {'haskell': ['stack-ghc', 'hlint']}
-  let g:ale_linters = {'haskell': ['stack-ghc-mod', 'hlint']}
+  "let g:ale_linters = {'haskell': ['stack-ghc-mod', 'hlint']}
   "let g:ale_linters = {'haskell': ['hdevtools', 'hlint']}
   let g:ale_sign_error = "E▶"
   let g:ale_sign_style_error = "E▷"
@@ -259,3 +340,7 @@ let NERDTreeRespectWildIgnore=1
 " racer
 "let g:racer_cmd = "<path-to-racer>/target/release/racer"
 "let $RUST_SRC_PATH="<path-to-rust-srcdir>/src/"
+
+" dotoo
+" let g:dotoo#agenda#files = ['~/dotoo-files/*.dotoo']
+" let g:dotoo#capture#refile = expand('~/dotoo-files/refile.dotoo')
