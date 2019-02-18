@@ -340,7 +340,3 @@ let NERDTreeRespectWildIgnore=1
 " racer
 "let g:racer_cmd = "<path-to-racer>/target/release/racer"
 "let $RUST_SRC_PATH="<path-to-rust-srcdir>/src/"
-
-" dotoo
-" let g:dotoo#agenda#files = ['~/dotoo-files/*.dotoo']
-" let g:dotoo#capture#refile = expand('~/dotoo-files/refile.dotoo')
