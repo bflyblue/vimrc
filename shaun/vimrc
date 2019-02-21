@@ -6,13 +6,9 @@ call plug#begin('~/.vim/plugged')
 if has('nvim')
   Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': './install.sh' }
 
-  " (Optional) Multi-entry selection UI.
   Plug 'junegunn/fzf'
-  " (Completion plugin option 1)
   Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
-  " (Completion plugin option 2)
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   " Plug 'natebosch/vim-lsc'
   " Plug 'Shougo/neocomplcache'
@@ -21,7 +17,6 @@ else
   Plug 'w0rp/ale'
 endif
 
-" Plug 'Floobits/floobits-vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
@@ -37,7 +32,6 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'morhetz/gruvbox'
-" Plug 'mpickering/hlint-refactor-vim'
 Plug 'nelstrom/vim-subrip'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'pbrisbin/vim-syntax-shakespeare'
@@ -150,8 +144,6 @@ map! <S-Insert> <C-r>"
 
 nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <Leader><Leader> 
-" nmap <Leader><Leader> :bn<CR>
-" nmap <Leader><BS> :bp<CR>
 map <F2> :NERDTreeToggle<CR>
 noremap <silent> <F4> :LAg!<CR>
 
@@ -224,7 +216,7 @@ if has('nvim')
   let g:LanguageClient_autoStart = 1
   let g:LanguageClient_autoStop = 1
   " let g:LanguageClient_changeThrottle = 1
-  let g:LanguageClient_waitOutputTimeout = 120
+  let g:LanguageClient_waitOutputTimeout = 300
   " let g:LanguageClient_setLoggingLevel = 'INFO'
   " set completefunc=LanguageClient#complete
   " let g:deoplete#enable_at_startup = 1
@@ -278,7 +270,7 @@ if has('nvim')
       set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
       nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
       nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-      " nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+      nnoremap <buffer> <silent> <Leader>R :call LanguageClient#textDocument_rename()<CR>
       nnoremap <buffer> <silent> <Leader>s :call LanguageClient#textDocument_documentSymbol()<CR>
       nnoremap <buffer> <silent> <Leader>Q :call LanguageClient#textDocument_formatting()<CR>
       nnoremap <buffer> <silent> <Leader>A :call LanguageClient#textDocument_codeAction()<CR>
@@ -309,25 +301,6 @@ if !has('nvim')
   let g:ale_sign_style_warning = "w▷"
   let g:ale_sign_info = "i▶"
 endif
-
-" Syntastic
-" let g:airline#extensions#syntastic#enabled = 1
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 2
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_enable_signs=1
-" let g:syntastic_error_symbol="E▶"
-" let g:syntastic_style_error_symbol="E▷"
-" let g:syntastic_warning_symbol="w▶"
-" let g:syntastic_style_warning_symbol="w▷"
-" highlight! link SyntasticWarningSign Comment
-" highlight! link SyntasticErrorSign Statement
-" highlight! link SignColumn String
-
-" ghcmod and hdevtools
-" let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
-" let g:syntastic_haskell_hdevtools_args = '-g-Wall'
 
 " liquid
 " let g:pandoc_use_embeds_in_codeblocks_for_langs = ['haskell', 'ruby', 'vim', 'python', 'r', 'json', 'c']
